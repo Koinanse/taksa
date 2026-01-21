@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Почему нам нужна такса</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+        }
+        
+        :root {
+            --primary: #FFA726;
+            --secondary: #FF9800;
+            --accent: #5D4037;
+            --light: #FFF3E0;
+            --dark: #4E342E;
+            --brown: #8D6E63;
+            --text: #333333;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z'%3E%3C/path%3E%3C/svg%3E");
+            opacity: 0.2;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-subtitle {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .dachshund-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin: 0 10px;
+            position: relative;
+            top: 5px;
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 60px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background-color: var(--primary);
+            border-radius: 5px;
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            width: 350px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 8px solid var(--primary);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card-image {
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover .card-image img {
+            transform: scale(1.05);
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card-title {
+            font-size: 1.6rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .card-text {
+            color: var(--text);
+            font-size: 1.05rem;
+        }
+        
+        /* Dachshund Facts */
+        .dachshund-facts {
+            background-color: rgba(255, 167, 38, 0.1);
+            border-radius: 30px;
+            padding: 50px;
+            margin-top: 50px;
+            border: 3px dashed var(--primary);
+        }
+        
+        .facts-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+        }
+        
+        .fact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .fact-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-right: 20px;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        /* Adoption Button Section */
+        .adoption-section {
+            text-align: center;
+            padding: 60px 0 100px;
+            background: linear-gradient(to bottom, var(--light) 0%, #ffecb3 100%);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .adoption-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23FF9800' fill-opacity='0.05' d='M50,20 C60,20 70,25 70,35 C70,45 60,50 50,50 C40,50 30,45 30,35 C30,25 40,20 50,20 Z M20,65 C30,65 40,70 40,80 C40,90 30,95 20,95 C10,95 0,90 0,80 C0,70 10,65 20,65 Z M80,65 C90,65 100,70 100,80 C100,90 90,95 80,95 C70,95 60,90 60,80 C60,70 70,65 80,65 Z'/%3E%3C/svg%3E");
+            background-size: 200px;
+            opacity: 0.3;
+        }
+        
+        .adoption-title {
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .adoption-text {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            color: var(--text);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .adopt-button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 22px 50px;
+            font-size: 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .adopt-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(255, 152, 0, 0.6);
+        }
+        
+        .adopt-button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .adopt-button i {
+            font-size: 2rem;
+        }
+        
+        /* Modal (Popup) Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 25px;
+            overflow: hidden;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.5s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+            animation: popUp 0.7s ease forwards;
+        }
+        
+        @keyframes popUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .modal-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-body {
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .modal-image {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-text {
+            font-size: 1.3rem;
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+        
+        .modal-footer {
+            padding: 20px 30px;
+            background-color: rgba(255, 167, 38, 0.1);
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 30px;
+            text-align: center;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .footer-text {
+            max-width: 600px;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .paw-print {
+            font-size: 2rem;
+            color: var(--primary);
+            margin: 0 5px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .card {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .section-title {
+                font-size: 2.4rem;
+            }
+            
+            .adoption-title {
+                font-size: 2.4rem;
+            }
+            
+            .adopt-button {
+                font-size: 1.6rem;
+                padding: 20px 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .dachshund-facts {
+                padding: 30px 20px;
+            }
+            
+            .fact-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .fact-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .adoption-title {
+                font-size: 2rem;
+            }
+            
+            .adoption-text {
+                font-size: 1.1rem;
+            }
+            
+            .adopt-button {
+                font-size: 1.4rem;
+                padding: 18px 35px;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>Почему нам нужна такса <i class="fas fa-dog dachshund-icon"></i></h1>
+            <p class="header-subtitle">Такса — это не просто собака, это верный друг, компаньон и источник радости для всей семьи. Узнайте, почему такса станет идеальным питомцем для вас!</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Section 1: Компания и преданность -->
+        <section id="loyalty" class="section">
+            <div class="container">
+                <h2 class="section-title">1. Компания и преданность</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/g9HfXWfx4IN8zcyQO3kzyQGaO9tPoidg7UPX205f.jpg" alt="Такса с хозяином">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><i class="fas fa-heart"></i> Абсолютная преданность</h3>
+                            <p class="card-text">Таксы невероятно привязываются к хозяину или семье, становясь настоящим «тенью». Они будут следовать за вами из комнаты в комнату, участвовать во всех делах и дарить чувство, что вы никогда не одиноки.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/g140VSlx5tFzXB0Z4zE0uZwFwbKVF3FRy32enSEM.jpg" alt="Такса смотрит с любовью">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><i class="fas fa-hands-helping"></i> Эмоциональная поддержка</h3>
+                            <p class="card-text">Таксы чутко улавливают настроение и способны поднять его в трудную минуту. Общение с таксой снижает стресс и уровень тревоги, даря вам позитивные эмоции каждый день.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Практические преимущества -->
+        <section id="practical" class="section">
+            <div class="container">
+                <h2 class="section-title">2. Практические преимущества</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/ghSolTtxEXUNh3yhAE3wVchdYSV9sE2mNbFGTzul.jpg" alt="Такса в квартире">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><i class="fas fa-home"></i> Компактный размер</h3>
+                            <p class="card-text">Идеально подходят для квартиры. Им не нужно много пространства, они с комфортом устроятся даже в небольшом жилье, не занимая много места.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/ga5QhVWxlkKdK9gs8wwtwO7VLDnFQi4RzqlwbJyb.jpg" alt="Пожилая такса">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><i class="fas fa-birthday-cake"></i> «Долгожители»</h3>
+                            <p class="card-text">При хорошем уходе таксы живут 12-16 лет и более, а значит, вы получаете верного друга на очень долгий срок, который будет с вами долгие годы.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/g7RVQs7xE5qTHY3D0Ou4ZCoqSSeMJeBnhfRLCOkp.jpg" alt="Такса охраняет дом">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><i class="fas fa-shield-alt"></i> Отличные сторожа</h3>
+                            <p class="card-text">Несмотря на размер, таксы — бдительные и бесстрашные охранники. Они обязательно предупредят громким лаем о любом подозрительном шуме за дверью.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Характер и интеллект -->
+        <section id="character" class="section">
+            <div class="container">
+                <h2 class="section-title">3. Характер и интеллект</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/gFZuxUYxrzDJIucDrjk8q0vgpIEjGzjwMbiegzFX.jpg" alt="Веселая такса">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><i class="fas fa-star"></i> Яркая индивидуальность</h3>
+                            <p class="card-text">С таксой не бывает скучно! Они остроумны, любопытны, обладают чувством юмора и часто ведут себя как «большие собаки в маленьком теле».</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/gK3Xm0axfv1qf75lErQLdN7oGGJczoLSSu8i9s1h.jpg" alt="Такса выполняет команду">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><i class="fas fa-brain"></i> Высокий интеллект</h3>
+                            <p class="card-text">Они легко обучаются, но могут быть и хитрыми. Дрессировка с ними — это увлекательный процесс, требующий находчивости и терпения.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/gJiXjMuxO8y5u5AatQr1GWkyMRk4Xe2hAf7XefSP.gif" height="900" width="450" frameborder="0" scrolling="no" alt="Такса на прогулке">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><i class="fas fa-walking"></i> Активный образ жизни</h3>
+                            <p class="card-text">Таксы, особенно стандартные, нуждаются в регулярных прогулках. Это отличный мотиватор для хозяина чаще бывать на свежем воздухе и гулять.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Для семьи -->
+        <section id="family" class="section">
+            <div class="container">
+                <h2 class="section-title">4. И еще немного фото будущей Сьюзи</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/g6RvoEjxam9jw9DDNi3iXvYXfWcIXIUnznmtoQEK.jpg">
+                        </div>
+                      
+                    </div>
+                    
+                 <div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/g4QvvvWxtZqDCfKPM4A5cUebsG7HdR4TA9Rjm8mO.jpg" height="900" width="450" frameborder="0" scrolling="no" alt="Такса на прогулке">
+                        </div>
+ 
+                    </div>
+					
+					<div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/gHLkGyKxi0zcktHr4sqgz5ASEuh5MbnirSZH0yJc.jpg" height="900" width="450" frameborder="0" scrolling="no" alt="Такса на прогулке">
+                        </div>
+ 
+                    </div>
+					
+					<div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/gcsFjdxxwtH2XdcXAkVlBU2kQEMuhhROqOPFzKSW.jpg" height="900" width="450" frameborder="0" scrolling="no" alt="Такса на прогулке">
+                        </div>
+ 
+                    </div>
+					
+					<div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/gfKvstmxnLIFOnvHnPSgANy1kAkptSO0NY383C3s.jpg" height="900" width="450" frameborder="0" scrolling="no" alt="Такса на прогулке">
+                        </div>
+ 
+                    </div>
+					
+					<div class="card">
+                        <div class="card-image">
+                            <img src="https://s4.iimage.su/s/21/g1xQPGTxtYqPiIBcJEUOmKcaD40M6mRCNzm25d4w.jpg" height="900" width="450" frameborder="0" scrolling="no" alt="Такса на прогулке">
+                        </div>
+ 
+                    </div>
+					
+				
+                
+                <!-- Additional Dachshund Facts -->
+                <div class="dachshund-facts">
+                    <h3 class="facts-title">Интересные факты о таксах</h3>
+                    <div class="fact-item">
+                        <div class="fact-icon"><i class="fas fa-paw"></i></div>
+                        <div>
+                            <h4>Историческое предназначение</h4>
+                            <p>Таксы были выведены в Германии более 300 лет назад для охоты на барсуков и других норных животных, что объясняет их длинное тело и короткие лапы.</p>
+                        </div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-icon"><i class="fas fa-palette"></i></div>
+                        <div>
+                            <h4>Разнообразие окрасов</h4>
+                            <p>Таксы бывают разных окрасов: рыжие, черно-подпалые, шоколадные, мраморные, тигровые и даже кремовые (светлые).</p>
+                        </div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-icon"><i class="fas fa-ruler-combined"></i></div>
+                        <div>
+                            <h4>Три размера</h4>
+                            <p>Существуют стандартные, миниатюрные и кроличьи таксы, которые отличаются не только размером, но и характером.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Adoption Button Section -->
+        <section class="adoption-section">
+            <div class="container">
+                <h2 class="adoption-title">Готовы к новому другу?</h2>
+                <p class="adoption-text">Если вы убедились, что такса — идеальный питомец для вашей семьи, нажмите на кнопку ниже и сделайте первый шаг к счастливой жизни с этим удивительным созданием!</p>
+                <button class="adopt-button" id="adoptButton">
+                    <i class="fas fa-paw"></i> Взять таксу в семью <i class="fas fa-heart"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal (Popup) -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-dog"></i> Поздравляем!</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://s4.iimage.su/s/21/gNBvQGcx4w8DNDzRpt3hdELezWPhUHDEdDgQ8asX.png"  width="400" frameborder="0" scrolling="no" alt="Счастливая такса" class="modal-image">
+                <p class="modal-text">Вы сделали отличный выбор! Такса станет не просто домашним питомцем, а настоящим членом семьи, который принесет в ваш дом море радости, любви и веселья. Готовьтесь к увлекательным прогулкам, забавным играм и безграничной преданности!</p>
+               
+            </div>
+            <div class="modal-footer">
+                <p><i class="fas fa-bone"></i> Желаем вам много счастливых лет вместе с вашей новой таксой! <i class="fas fa-bone"></i></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-dog"></i>
+                </div>
+                <h3>Такса — идеальный друг для всей семьи!</h3>
+                <p class="footer-text">Подарите себе и своей семье радость общения с этой удивительной породой. Такса принесет в ваш дом любовь, преданность и множество счастливых моментов.</p>
+                <div>
+                    <span class="paw-print"><i class="fas fa-paw"></i></span>
+                    <span class="paw-print"><i class="fas fa-paw"></i></span>
+                    <span class="paw-print"><i class="fas fa-paw"></i></span>
+                </div>
+                <p style="margin-top: 30px; opacity: 0.7;">© 2023 Сайт о таксах. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Анимация появления секций при прокрутке
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            // Функция для проверки видимости элемента
+            function checkVisibility() {
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    // Если секция видна на экране
+                    if (sectionTop < windowHeight - 100) {
+                        section.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Проверяем видимость при загрузке и прокрутке
+            checkVisibility();
+            window.addEventListener('scroll', checkVisibility);
+            
+            // Добавляем плавную прокрутку для ссылок
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Добавляем немного интерактивности
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Добавляем анимацию для лапок в футере
+            const paws = document.querySelectorAll('.paw-print');
+            paws.forEach((paw, index) => {
+                // Задержка для каждой лапки
+                setTimeout(() => {
+                    paw.style.animation = 'bounce 1s infinite alternate';
+                }, index * 200);
+            });
+            
+            // Добавляем CSS анимацию для лапок
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes bounce {
+                    0% { transform: translateY(0); }
+                    100% { transform: translateY(-10px); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Модальное окно
+            const adoptButton = document.getElementById('adoptButton');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalClose = document.getElementById('modalClose');
+            
+            // Открытие модального окна при клике на кнопку
+            adoptButton.addEventListener('click', function() {
+                modalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Блокируем прокрутку фона
+            });
+            
+            // Закрытие модального окна при клике на крестик
+            modalClose.addEventListener('click', function() {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto'; // Восстанавливаем прокрутку
+            });
+            
+            // Закрытие модального окна при клике на затемненную область
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    modalOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto'; // Восстанавливаем прокрутку
+                }
+            });
+            
+            // Закрытие модального окна при нажатии клавиши Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    modalOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto'; // Восстанавливаем прокрутку
+                }
+            });
+            
+            // Добавляем эффект "выпрыгивания" для кнопки
+            adoptButton.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.05)';
+            });
+            
+            adoptButton.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
